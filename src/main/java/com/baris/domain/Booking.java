@@ -2,9 +2,14 @@ package com.baris.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -14,10 +19,17 @@ public class Booking {
 		OPEN, ACTIVE, CANCELLED
 	}
 
-	@OneToOne
+	@Id
+	@GeneratedValue
+	@Column(name = "BOOKING_ID")
+	private Long id;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="USER_ID")
 	private User user;
 
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="CAR_ID")
 	private Car Car;
 
 	@Enumerated(EnumType.STRING)
@@ -40,7 +52,7 @@ public class Booking {
 	}
 
 	public void setCar(Car car) {
-		this.Car = car;
+		Car = car;
 	}
 
 	public Status getStatus() {
